@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Book - LibrariPro</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/issue-return.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-book"></i>
+                    <span>LibrariPro</span>
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="books.html" class="nav-link">
+                            <i class="fas fa-books"></i>
+                            <span>Books</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="members.html" class="nav-link">
+                            <i class="fas fa-users"></i>
+                            <span>Members</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="transactions.html" class="nav-link">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transactions</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="issue-book.html" class="nav-link">
+                            <i class="fas fa-book-open"></i>
+                            <span>Issue Book</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="return-book.html" class="nav-link">
+                            <i class="fas fa-undo"></i>
+                            <span>Return Book</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="reports.html" class="nav-link">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name">Admin User</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Return Book</h1>
+                </div>
+                <div class="header-right">
+                    <div class="breadcrumb">
+                        <a href="dashboard.html">Dashboard</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>Return Book</span>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Return Book Content -->
+            <div class="return-content">
+                <!-- Alert Container -->
+                <div id="alertContainer"></div>
+                
+                <!-- Return Methods -->
+                <div class="return-methods">
+                    <div class="method-tabs">
+                        <button class="tab-btn active" onclick="switchTab('transaction')">
+                            <i class="fas fa-list"></i>
+                            By Transaction
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('search')">
+                            <i class="fas fa-search"></i>
+                            Search & Return
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('scan')">
+                            <i class="fas fa-barcode"></i>
+                            Scan Barcode
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Return by Transaction -->
+                <div id="transactionTab" class="tab-content active">
+                    <div class="return-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-undo"></i> Return by Transaction</h2>
+                            <p>Select an active transaction to return the book</p>
+                        </div>
+                        
+                        <div class="card-content">
+                            <form id="returnByTransactionForm" class="return-form">
+                                <div class="form-section">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="transactionSearch">Search Transaction</label>
+                                            <div class="search-input">
+                                                <i class="fas fa-search"></i>
+                                                <input type="text" id="transactionSearch" placeholder="Search by transaction ID, book title, or member name...">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="transactionSelect">Select Transaction *</label>
+                                            <select id="transactionSelect" name="transactionId" required>
+                                                <option value="">Choose a transaction...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Selected Transaction Info -->
+                                    <div id="selectedTransactionInfo" class="transaction-info" style="display: none;">
+                                        <div class="info-card">
+                                            <div class="transaction-details">
+                                                <h4 id="transactionBookTitle">Book Title</h4>
+                                                <p id="transactionMemberName">Member Name</p>
+                                                <div class="transaction-meta">
+                                                    <span class="meta-item">
+                                                        <i class="fas fa-calendar"></i>
+                                                        Issue: <span id="transactionIssueDate">Date</span>
+                                                    </span>
+                                                    <span class="meta-item">
+                                                        <i class="fas fa-clock"></i>
+                                                        Due: <span id="transactionDueDate">Date</span>
+                                                    </span>
+                                                    <span id="transactionStatus" class="status-badge">Status</span>
+                                                </div>
+                                            </div>
+                                            <div class="days-info">
+                                                <div class="days-count" id="daysInfo">
+                                                    <span class="days-number" id="daysNumber">0</span>
+                                                    <span class="days-label" id="daysLabel">Days</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-section">
+                                    <h3><i class="fas fa-info-circle"></i> Return Details</h3>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="returnDate">Return Date *</label>
+                                            <input type="date" id="returnDate" name="returnDate" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="bookCondition">Book Condition</label>
+                                            <select id="bookCondition" name="condition">
+                                                <option value="Excellent">Excellent</option>
+                                                <option value="Good" selected>Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                                <option value="Damaged">Damaged</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="returnNotes">Return Notes</label>
+                                        <textarea id="returnNotes" name="notes" rows="3" placeholder="Add any notes about the book condition or return..."></textarea>
+                                    </div>
+                                    
+                                    <!-- Fine Calculation -->
+                                    <div id="fineCalculation" class="fine-section" style="display: none;">
+                                        <div class="fine-card">
+                                            <h4><i class="fas fa-exclamation-triangle"></i> Late Return Fine</h4>
+                                            <div class="fine-details">
+                                                <div class="fine-item">
+                                                    <span>Days Overdue:</span>
+                                                    <span id="overdueDays">0</span>
+                                                </div>
+                                                <div class="fine-item">
+                                                    <span>Fine per Day:</span>
+                                                    <span>$1.00</span>
+                                                </div>
+                                                <div class="fine-item total">
+                                                    <span>Total Fine:</span>
+                                                    <span id="totalFine">$0.00</span>
+                                                </div>
+                                            </div>
+                                            <div class="fine-actions">
+                                                <label class="checkbox-container">
+                                                    <input type="checkbox" id="fineWaived">
+                                                    <span class="checkmark"></span>
+                                                    Waive Fine
+                                                </label>
+                                                <label class="checkbox-container">
+                                                    <input type="checkbox" id="finePaid">
+                                                    <span class="checkmark"></span>
+                                                    Fine Paid
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" onclick="resetReturnForm()">
+                                        <i class="fas fa-refresh"></i>
+                                        Reset
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-undo"></i>
+                                        Return Book
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Return by Search -->
+                <div id="searchTab" class="tab-content">
+                    <div class="return-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-search"></i> Search & Return</h2>
+                            <p>Search for issued books and return them directly</p>
+                        </div>
+                        
+                        <div class="card-content">
+                            <div class="search-section">
+                                <div class="search-input large">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="globalSearch" placeholder="Search by book title, member name, or transaction ID...">
+                                </div>
+                            </div>
+                            
+                            <div id="searchResults" class="search-results">
+                                <!-- Search results will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Return by Barcode -->
+                <div id="scanTab" class="tab-content">
+                    <div class="return-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-barcode"></i> Scan Barcode</h2>
+                            <p>Scan book barcode or enter manually</p>
+                        </div>
+                        
+                        <div class="card-content">
+                            <div class="scan-section">
+                                <div class="scan-input">
+                                    <i class="fas fa-barcode"></i>
+                                    <input type="text" id="barcodeInput" placeholder="Scan or enter book barcode/ISBN...">
+                                    <button type="button" class="scan-btn">
+                                        <i class="fas fa-camera"></i>
+                                        Scan
+                                    </button>
+                                </div>
+                                <p class="scan-help">Focus on the input field and scan the barcode, or type it manually</p>
+                            </div>
+                            
+                            <div id="barcodeResults" class="barcode-results">
+                                <!-- Barcode scan results will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Returns -->
+                <div class="recent-returns">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Recent Returns</h3>
+                        <a href="transactions.html?filter=returned" class="view-all">View All</a>
+                    </div>
+                    <div class="recent-list" id="recentReturns">
+                        <!-- Recent returns will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="scripts/main.js"></script>
+    <script src="scripts/return-book.js"></script>
+</body>
+</html>

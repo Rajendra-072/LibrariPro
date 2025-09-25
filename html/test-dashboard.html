@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dashboard - LibrariPro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .nav-links a {
+            background: #28a745;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .nav-links a:hover { background: #1e7e34; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 LibrariPro Dashboard Test</h1>
+            <p>यह page dashboard की problems को debug करने के लिए है</p>
+        </div>
+
+        <!-- Session Test -->
+        <div class="test-section info">
+            <h3>📊 Session Status</h3>
+            <p id="sessionStatus">Checking session...</p>
+            <button onclick="checkSession()">Check Session</button>
+            <button onclick="createTestSession()">Create Test Session</button>
+            <button onclick="clearSession()">Clear Session</button>
+        </div>
+
+        <!-- Navigation Test -->
+        <div class="test-section">
+            <h3>🧭 Navigation Test</h3>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="login.html">Login</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="books.html">Books</a>
+                <a href="members.html">Members</a>
+                <a href="transactions.html">Transactions</a>
+                <a href="issue-book.html">Issue Book</a>
+                <a href="return-book.html">Return Book</a>
+            </div>
+        </div>
+
+        <!-- Data Test -->
+        <div class="test-section">
+            <h3>💾 Data Test</h3>
+            <p id="dataStatus">Checking data...</p>
+            <button onclick="checkData()">Check Data</button>
+            <button onclick="initializeData()">Initialize Data</button>
+            <button onclick="clearAllData()">Clear All Data</button>
+        </div>
+
+        <!-- Console Logs -->
+        <div class="test-section">
+            <h3>📝 Console Logs</h3>
+            <p>Browser console खोलें (F12) और errors check करें</p>
+            <button onclick="testConsole()">Test Console</button>
+        </div>
+
+        <!-- Quick Login -->
+        <div class="test-section success">
+            <h3>⚡ Quick Login</h3>
+            <p>Direct dashboard access के लिए:</p>
+            <button onclick="quickLogin()">Quick Login & Go to Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        // Check session status
+        function checkSession() {
+            const session = localStorage.getItem('library_session');
+            const statusEl = document.getElementById('sessionStatus');
+            
+            if (session) {
+                try {
+                    const data = JSON.parse(session);
+                    statusEl.innerHTML = `
+                        <strong>✅ Session Found:</strong><br>
+                        Email: ${data.email}<br>
+                        Role: ${data.role}<br>
+                        Login Time: ${data.loginTime}<br>
+                        Is Logged In: ${data.isLoggedIn}
+                    `;
+                    statusEl.parentElement.className = 'test-section success';
+                } catch (e) {
+                    statusEl.innerHTML = `<strong>❌ Invalid Session Data:</strong> ${e.message}`;
+                    statusEl.parentElement.className = 'test-section error';
+                }
+            } else {
+                statusEl.innerHTML = '<strong>❌ No Session Found</strong>';
+                statusEl.parentElement.className = 'test-section error';
+            }
+        }
+
+        // Create test session
+        function createTestSession() {
+            const sessionData = {
+                email: "admin@libraripro.com",
+                name: "Admin User",
+                role: "admin",
+                loginTime: new Date().toISOString(),
+                isLoggedIn: true
+            };
+            
+            localStorage.setItem('library_session', JSON.stringify(sessionData));
+            alert('✅ Test session created!');
+            checkSession();
+        }
+
+        // Clear session
+        function clearSession() {
+            localStorage.removeItem('library_session');
+            alert('🗑️ Session cleared!');
+            checkSession();
+        }
+
+        // Check data
+        function checkData() {
+            const books = localStorage.getItem('library_books');
+            const members = localStorage.getItem('library_members');
+            const transactions = localStorage.getItem('library_transactions');
+            
+            const statusEl = document.getElementById('dataStatus');
+            statusEl.innerHTML = `
+                <strong>📚 Books:</strong> ${books ? JSON.parse(books).length + ' items' : 'Not found'}<br>
+                <strong>👥 Members:</strong> ${members ? JSON.parse(members).length + ' items' : 'Not found'}<br>
+                <strong>📋 Transactions:</strong> ${transactions ? JSON.parse(transactions).length + ' items' : 'Not found'}
+            `;
+        }
+
+        // Initialize data
+        function initializeData() {
+            // Sample books
+            const sampleBooks = [
+                {
+                    id: "B001",
+                    title: "To Kill a Mockingbird",
+                    author: "Harper Lee",
+                    isbn: "978-0-06-112008-4",
+                    category: "Fiction",
+                    status: "Available",
+                    addedDate: "2024-01-15"
+                }
+            ];
+            
+            // Sample members
+            const sampleMembers = [
+                {
+                    id: "M001",
+                    name: "John Smith",
+                    email: "john.smith@email.com",
+                    type: "Student",
+                    status: "Active",
+                    joinDate: "2024-01-10"
+                }
+            ];
+            
+            // Sample transactions
+            const sampleTransactions = [
+                {
+                    id: "T001",
+                    bookId: "B001",
+                    bookTitle: "To Kill a Mockingbird",
+                    memberId: "M001",
+                    memberName: "John Smith",
+                    issueDate: "2024-01-20",
+                    dueDate: "2024-02-03",
+                    status: "Issued"
+                }
+            ];
+            
+            localStorage.setItem('library_books', JSON.stringify(sampleBooks));
+            localStorage.setItem('library_members', JSON.stringify(sampleMembers));
+            localStorage.setItem('library_transactions', JSON.stringify(sampleTransactions));
+            
+            alert('✅ Sample data initialized!');
+            checkData();
+        }
+
+        // Clear all data
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data?')) {
+                localStorage.clear();
+                alert('🗑️ All data cleared!');
+                checkSession();
+                checkData();
+            }
+        }
+
+        // Test console
+        function testConsole() {
+            console.log('🔧 LibrariPro Test Log');
+            console.log('Session:', localStorage.getItem('library_session'));
+            console.log('Books:', localStorage.getItem('library_books'));
+            console.log('Current URL:', window.location.href);
+            alert('Check browser console (F12) for detailed logs');
+        }
+
+        // Quick login
+        function quickLogin() {
+            createTestSession();
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        }
+
+        // Auto-check on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkSession();
+            checkData();
+        });
+    </script>
+</body>
+</html>

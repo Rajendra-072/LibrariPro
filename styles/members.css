@@ -1,0 +1,161 @@
+/* Members Management Styles */
+.members-content {
+  padding: 30px;
+}
+
+.members-filters {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.members-table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.members-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.members-table th {
+  background: #f8f9fa;
+  padding: 20px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 14px;
+}
+
+.members-table td {
+  padding: 18px 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #333;
+}
+
+.members-table tr:hover {
+  background: #f8f9fa;
+}
+
+.member-id {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.member-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.member-email {
+  color: #666;
+}
+
+.member-type {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.type-student {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.type-faculty {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.type-staff {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.type-public {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.member-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-active {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.status-inactive {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.join-date {
+  color: #666;
+  font-size: 13px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .members-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .members-table {
+    font-size: 13px;
+  }
+
+  .members-table th,
+  .members-table td {
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .members-content {
+    padding: 20px;
+  }
+
+  .members-filters {
+    padding: 20px;
+  }
+
+  .members-table-container {
+    overflow-x: auto;
+  }
+
+  .members-table {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 480px) {
+  .members-filters {
+    padding: 15px;
+  }
+
+  .members-table {
+    min-width: 1000px;
+  }
+}

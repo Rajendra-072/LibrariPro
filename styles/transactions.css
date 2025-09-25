@@ -1,0 +1,233 @@
+/* Transactions Management Styles */
+.transactions-content {
+  padding: 30px;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: white;
+}
+
+.action-btn.issue {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.action-btn.return {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.action-btn.renew {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.transactions-filters {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.transactions-table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions-table th {
+  background: #f8f9fa;
+  padding: 20px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 14px;
+}
+
+.transactions-table td {
+  padding: 18px 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #333;
+}
+
+.transactions-table tr:hover {
+  background: #f8f9fa;
+}
+
+.transaction-id {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.book-title {
+  font-weight: 600;
+  color: #333;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member-name {
+  color: #666;
+}
+
+.date-cell {
+  color: #666;
+  font-size: 13px;
+}
+
+.transaction-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-issued {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-returned {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.status-overdue {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.transaction-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-return {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.btn-return:hover {
+  background: #2e7d32;
+  color: white;
+}
+
+.btn-renew {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.btn-renew:hover {
+  background: #f57c00;
+  color: white;
+}
+
+/* Modal Form Specific Styles */
+.modal-form select {
+  background: white;
+}
+
+.modal-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .quick-actions {
+    flex-wrap: wrap;
+  }
+
+  .transactions-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .transactions-table {
+    font-size: 13px;
+  }
+
+  .transactions-table th,
+  .transactions-table td {
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .transactions-content {
+    padding: 20px;
+  }
+
+  .quick-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    justify-content: center;
+  }
+
+  .transactions-filters {
+    padding: 20px;
+  }
+
+  .transactions-table-container {
+    overflow-x: auto;
+  }
+
+  .transactions-table {
+    min-width: 1000px;
+  }
+
+  .transaction-actions {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .transactions-filters {
+    padding: 15px;
+  }
+
+  .transactions-table {
+    min-width: 1100px;
+  }
+}
